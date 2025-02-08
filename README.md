@@ -1,1 +1,3 @@
-# tg-word-count
+# Telegram word count
+
+# 

@@ -30,6 +30,7 @@ interface Chat {
 }
 
 const data: Chat[] = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
+
 const wordCounts: { [key: string]: { name: string, count: number } } = {};
 const countWords = (text: string): number => {
   return text.split(/\s+/).filter(word => word.length > 0).length;
@@ -43,6 +44,10 @@ data.forEach((chat: Chat) => {
     const messageText = Array.isArray(text) ? text.join(' ') : text;
     const wordCount = countWords(messageText);
 
+    if (!userId || !userName || !text) {
+      return;
+    }
+    
     if (wordCounts[userId]) {
       wordCounts[userId].count += wordCount;
     } else {
