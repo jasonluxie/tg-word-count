@@ -1,10 +1,14 @@
 import * as fs from 'fs';
 
+let rawData = fs.readFileSync('result.json', 'utf-8');
+
+if (!rawData.trim().startsWith('[')) {
+  rawData = `[${rawData}]`;
+}
 interface TextEntity {
   type: string;
   text: string;
 }
-
 interface Message {
   id: number;
   type: string;
@@ -21,7 +25,6 @@ interface Message {
   width?: number;
   height?: number;
 }
-
 interface Chat {
   name: string;
   type: string;
@@ -29,8 +32,7 @@ interface Chat {
   messages: Message[];
 }
 
-const data: Chat[] = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
-
+const data: Chat[] = JSON.parse(rawData);
 const wordCounts: { [key: string]: { name: string, count: number } } = {};
 const countWords = (text: string): number => {
   return text.split(/\s+/).filter(word => word.length > 0).length;
